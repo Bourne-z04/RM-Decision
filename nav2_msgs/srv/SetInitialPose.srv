@@ -1,0 +1,5 @@
+# Set the initial pose of the robot
+geometry_msgs/PoseWithCovarianceStamped pose
+---
+# Response
+bool success

@@ -1,0 +1,12 @@
+# Navigate to a pose
+geometry_msgs/PoseStamped pose
+---
+# Result
+std_msgs/Empty result
+---
+# Feedback
+float32 distance_remaining
+builtin_interfaces/Duration navigation_time
+int16 number_of_recoveries
+float32 current_pose_x
+float32 current_pose_y

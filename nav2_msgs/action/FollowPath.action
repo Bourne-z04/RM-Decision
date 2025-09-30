@@ -1,0 +1,11 @@
+# Follow a path
+nav2_msgs/Path path
+string controller_id
+---
+# Result
+std_msgs/Empty result
+---
+# Feedback
+float32 distance_to_goal
+float32 speed
+builtin_interfaces/Duration navigation_time

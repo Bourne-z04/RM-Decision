@@ -1,0 +1,11 @@
+# Compute a path to a pose
+geometry_msgs/PoseStamped goal
+string planner_id
+bool use_start  # If false, use current robot pose as path start
+geometry_msgs/PoseStamped start
+---
+# Result
+nav2_msgs/Path path
+builtin_interfaces/Duration planning_time
+---
+# Feedback - no feedback
