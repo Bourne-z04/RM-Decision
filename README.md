@@ -30,7 +30,7 @@
 1. 安装依赖
 
     ```sh
-    sudo apt install ros-humble-behaviortree-cpp
+    sudo apt-get update && sudo apt-get install -y ros-humble-behaviortree-cpp ros-humble-nav2-msgs
     ```
 
 2. 克隆仓库
