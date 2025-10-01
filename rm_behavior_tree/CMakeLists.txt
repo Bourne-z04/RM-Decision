@@ -132,6 +132,7 @@ ament_auto_add_library(print_message SHARED
 add_target_dependencies(print_message)
 
 ament_auto_package(
+  USE_SCOPED_HEADER_INSTALL_DIR
   INSTALL_TO_SHARE
   launch
   config
