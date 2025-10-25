@@ -1,8 +1,6 @@
 # rm_behavior_tree
 
-> 本仓库为 [RM2024_SMBU_auto_sentry_ws](https://gitee.com/SMBU-POLARBEAR/RM2024_SMBU_auto_sentry_ws) 的子模块，**与父仓库的其他模块存在依赖关系**
-
-基于 BehaviorTree.CPP 的 Robomaster 哨兵决策树，与导航模块和自瞄模块基于 ROS2 topic 和 action 进行信息传递，可在 [仿真环境](https://gitee.com/SMBU-POLARBEAR/pb_rmsimulation) 中进行决策预设开发，并部署到实体机器人上运行。
+基于 BehaviorTree.CPP 的 Robomaster 哨兵决策树，与导航模块和自瞄模块基于 ROS2 topic 和 action 进行信息传递，可在仿真环境中进行决策预设开发，并部署到实体机器人上运行。
 
 ## 文件结构
 
@@ -51,7 +49,7 @@
 1. 开启 [虚拟裁判系统话题发布](./rm_decision_interfaces/publish_script.sh)
 
     ```sh
-    ./rm_decision_ws/rm_decision_interfaces/publish_script.sh
+    ./rm_decision_interfaces/publish_script.sh
     ```
 
 2. 启动行为树

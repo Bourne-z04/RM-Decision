@@ -2,6 +2,7 @@ devel/
 build/
 install/
 log/
+tests/
 
 .vscode/
 .cache/
