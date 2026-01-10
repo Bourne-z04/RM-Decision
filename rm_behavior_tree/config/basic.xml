@@ -25,35 +25,9 @@
             <RobotControl stop_gimbal_scan="False"
                           chassis_spin_vel="0.5"/>
           </WhileDoElse>
-          <WhileDoElse>
+          <WhileDoElse name="Attack or Retreat">
             <Sequence>
-              <IsDetectEnemy message="{armors}"/>
-              <IsStatusOK message="{robot_status}"
-                          hp_threshold="400"
-                          heat_threshold="350"/>
-            </Sequence>
-            <WhileDoElse>
-              <IsAttaked message="{robot_status}"/>
-              <AsyncSequence>
-                <GetCurrentLocation current_location="{current_location}"/>
-                <MoveAround expected_nearby_goal_count="3"
-                            expected_dis="0.3"
-                            message="{current_location}"/>
-              </AsyncSequence>
-              <Fallback name="Whether interrupt navigation">
-                <IsStatusOK message="{robot_status}"
-                            hp_threshold="250"
-                            heat_threshold="350"/>
-                <SendGoal name="SupplyArea"
-                          goal_pose="-2.5;4.07;0; 0;0;0;1"
-                          action_name="navigate_to_pose"/>
-              </Fallback>
-            </WhileDoElse>
-            <WhileDoElse>
-              <IsStatusOK message="{robot_status}"
-                          hp_threshold="400"
-                          heat_threshold="350"/>
-              <WhileDoElse>
+              <WhileDoElse name="DodgeIfAttacked">
                 <IsAttaked message="{robot_status}"/>
                 <AsyncSequence>
                   <GetCurrentLocation current_location="{current_location}"/>
@@ -61,56 +35,29 @@
                               expected_dis="0.3"
                               message="{current_location}"/>
                 </AsyncSequence>
-                <WhileDoElse>
-                  <IsGameTime name="0:00~1:30"
-                              message="{game_status}"
-                              game_progress="4"
-                              lower_remain_time="0"
-                              higher_remain_time="150"/>
-                  <SendGoal name="BaseFrontWall"
-                            goal_pose="0.8;-2;0; 0;0;0;1"
-                            action_name="navigate_to_pose"/>
-                  <WhileDoElse>
-                    <IsGameTime name="3:20-4:05"
-                                message="{game_status}"
-                                game_progress="4"
-                                lower_remain_time="200"
-                                higher_remain_time="245"/>
-                    <RateController hz="1">
-                      <SendGoal name="OccupyCenter"
-                                goal_pose="3.0;0.4;0; 0;0;0;1"
-                                action_name="navigate_to_pose"/>
-                    </RateController>
-                    <WhileDoElse name="GoOutAttack">
-                      <IsFriendOK message="{robot_hp}"
-                                  friend_color="red"/>
-                      <RateController hz="1">
-                        <SendGoal name="Attack_Left"
-                                  goal_pose="5.1;1.9;0; 0;0;0;1"
-                                  action_name="navigate_to_pose"/>
-                      </RateController>
-                      <RateController hz="1">
-                        <SendGoal name="Center"
-                                  goal_pose="3;1;0; 0;0;0;1"
-                                  action_name="navigate_to_pose"/>
-                      </RateController>
-                    </WhileDoElse>
-                  </WhileDoElse>
-                </WhileDoElse>
+                <RobotControl stop_gimbal_scan="True"
+                              chassis_spin_vel="0.5"/>
               </WhileDoElse>
-              <RateController name="Retreat"
-                              hz="1">
-                <SendGoal name="SupplyArea"
-                          goal_pose="-2.5;4.07;0; 0;0;0;1"
-                          action_name="navigate_to_pose"/>
-              </RateController>
-            </WhileDoElse>
+              <IsStatusOK message="{robot_status}"
+                          hp_threshold="200"
+                          heat_threshold="150"/>
+            </Sequence>
+            <RateController hz="1">
+              <SendGoal name="OccupyArea"
+                        goal_pose="5;-3;0; 0;0;0;1"
+                        action_name="navigate_to_pose"/>
+            </RateController>
+            <RateController hz="1">
+              <SendGoal name="SupplyArea"
+                        goal_pose="-0.13;-0.03;0; 0;0;0;1"
+                        action_name="navigate_to_pose"/>
+            </RateController>
           </WhileDoElse>
         </ReactiveSequence>
         <ReactiveSequence>
           <RateController hz="1">
             <SendGoal name="Home"
-                      goal_pose="0;0;0; 0;0;0;1"
+                      goal_pose="-0.13;-0.03;0; 0;0;0;1"
                       action_name="navigate_to_pose"/>
           </RateController>
           <RobotControl stop_gimbal_scan="True"
