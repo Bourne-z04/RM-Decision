@@ -30,6 +30,9 @@
             <input_port name="goal_pose" default="0;0;0; 0;0;0;1"/>
             <input_port name="action_name" default="navigate_to_pose"/>
         </Action>
+        <Action ID="SelectRandomOccupyBackup" editable="true">
+            <output_port name="selected_backup" default="{backup_goal}"/>
+        </Action>
         <Action ID="PrintMessage" editable="true">
             <input_port name="message_to_print" default="Hello,World!"/>
         </Action>

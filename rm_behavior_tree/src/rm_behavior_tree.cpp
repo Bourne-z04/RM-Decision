@@ -43,6 +43,7 @@ int main(int argc, char ** argv)
     "is_friend_ok",
     "is_outpost_ok",
     "print_message",
+    "select_random_occupy_backup",
   };
   // clang-format on
 

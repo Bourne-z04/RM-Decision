@@ -23,13 +23,23 @@
                         hp_threshold="200"
                         heat_threshold="150"/>
             <RateController hz="1">
-              <SendGoal name="OccupyArea"
-                        goal_pose="4.5;-3.5;0;0;0;0;1"
-                        action_name="navigate_to_pose"/>
+              <Sequence name="OccupyArea with Backup">
+                <Fallback name="Try Primary First">
+                  <SendGoal name="OccupyArea Primary"
+                            goal_pose="2.0;-0.5;0;0;0;0;1"
+                            action_name="navigate_to_pose"/>
+                  <Sequence name="Select Random Backup">
+                    <SelectRandomOccupyBackup selected_backup="{backup_goal}"/>
+                    <SendGoal name="OccupyArea Random Backup"
+                              goal_pose="{backup_goal}"
+                              action_name="navigate_to_pose"/>
+                  </Sequence>
+                </Fallback>
+              </Sequence>
             </RateController>
             <RateController hz="1">
               <SendGoal name="SupplyArea"
-                        goal_pose="-0.13;-0.03;0; 0;0;0;1"
+                        goal_pose="0;0;0;0;0;0;1"
                         action_name="navigate_to_pose"/>
             </RateController>
           </WhileDoElse>
@@ -37,7 +47,7 @@
         <ReactiveSequence>
           <RateController hz="1">
             <SendGoal name="Home"
-                      goal_pose="-0.13;-0.03;0; 0;0;0;1"
+                      goal_pose="0;0;0;0;0;0;1"
                       action_name="navigate_to_pose"/>
           </RateController>
         </ReactiveSequence>
