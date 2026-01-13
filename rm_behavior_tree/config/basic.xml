@@ -18,30 +18,10 @@
                     lower_remain_time="0"
                     higher_remain_time="300"/>
         <ReactiveSequence>
-          <WhileDoElse name="Whether gimbal_scan/chassis_spin">
-            <IsDetectEnemy message="{armors}"/>
-            <RobotControl stop_gimbal_scan="True"
-                          chassis_spin_vel="0.5"/>
-            <RobotControl stop_gimbal_scan="False"
-                          chassis_spin_vel="0.5"/>
-          </WhileDoElse>
           <WhileDoElse name="Attack or Retreat">
-            <Sequence>
-              <WhileDoElse name="DodgeIfAttacked">
-                <IsAttaked message="{robot_status}"/>
-                <AsyncSequence>
-                  <GetCurrentLocation current_location="{current_location}"/>
-                  <MoveAround expected_nearby_goal_count="3"
-                              expected_dis="0.3"
-                              message="{current_location}"/>
-                </AsyncSequence>
-                <RobotControl stop_gimbal_scan="True"
-                              chassis_spin_vel="0.5"/>
-              </WhileDoElse>
-              <IsStatusOK message="{robot_status}"
-                          hp_threshold="200"
-                          heat_threshold="150"/>
-            </Sequence>
+            <IsStatusOK message="{robot_status}"
+                        hp_threshold="200"
+                        heat_threshold="150"/>
             <RateController hz="1">
               <SendGoal name="OccupyArea"
                         goal_pose="5;-3;0; 0;0;0;1"
@@ -60,8 +40,6 @@
                       goal_pose="-0.13;-0.03;0; 0;0;0;1"
                       action_name="navigate_to_pose"/>
           </RateController>
-          <RobotControl stop_gimbal_scan="True"
-                        chassis_spin_vel="0.0"/>
         </ReactiveSequence>
       </WhileDoElse>
     </ReactiveSequence>
@@ -69,21 +47,6 @@
 
   <!-- Description of Node Models (used by Groot) -->
   <TreeNodesModel>
-    <Action ID="GetCurrentLocation"
-            editable="true">
-      <output_port name="current_location"
-                   default="{current_location}"/>
-    </Action>
-    <Action ID="IsAttaked"
-            editable="true">
-      <input_port name="message"
-                  default="{robot_status}"/>
-    </Action>
-    <Action ID="IsDetectEnemy"
-            editable="true">
-      <input_port name="message"
-                  default="{armors}"/>
-    </Action>
     <Action ID="IsFriendOK"
             editable="true">
       <input_port name="message"
@@ -111,25 +74,9 @@
       <input_port name="heat_threshold"
                   default="350"/>
     </Action>
-    <Action ID="MoveAround"
-            editable="true">
-      <input_port name="expected_nearby_goal_count"
-                  default="5"/>
-      <input_port name="expected_dis"
-                  default="0.3"/>
-      <input_port name="message"
-                  default="{current_location}"/>
-    </Action>
     <Decorator ID="RateController">
       <input_port name="hz">Rate</input_port>
     </Decorator>
-    <Action ID="RobotControl"
-            editable="true">
-      <input_port name="stop_gimbal_scan"
-                  default="True"/>
-      <input_port name="chassis_spin_vel"
-                  default="False"/>
-    </Action>
     <Action ID="SendGoal"
             editable="true">
       <input_port name="goal_pose"

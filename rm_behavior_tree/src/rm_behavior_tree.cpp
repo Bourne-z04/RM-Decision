@@ -24,10 +24,6 @@ int main(int argc, char ** argv)
   BT::RosNodeParams params_update_msg;
   params_update_msg.nh = std::make_shared<rclcpp::Node>("update_msg");
 
-  BT::RosNodeParams params_robot_control;
-  params_robot_control.nh = std::make_shared<rclcpp::Node>("robot_control");
-  params_robot_control.default_port_value = "robot_control";
-
   BT::RosNodeParams params_send_goal;
   params_send_goal.nh = std::make_shared<rclcpp::Node>("send_goal");
   params_send_goal.default_port_value = "goal_pose";
@@ -46,12 +42,8 @@ int main(int argc, char ** argv)
     "decision_switch",
     "is_game_time",
     "is_status_ok",
-    "is_detect_enemy",
-    "is_attacked",
     "is_friend_ok",
     "is_outpost_ok",
-    "get_current_location",
-    "move_around",
     "print_message",
   };
   // clang-format on
@@ -65,8 +57,6 @@ int main(int argc, char ** argv)
   }
 
   RegisterRosNode(factory, BT::SharedLibrary::getOSName("send_goal"), params_send_goal);
-
-  RegisterRosNode(factory, BT::SharedLibrary::getOSName("robot_control"), params_robot_control);
 
   auto tree = factory.createTreeFromFile(bt_xml_path);
 

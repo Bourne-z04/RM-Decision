@@ -8,7 +8,7 @@ ros2 topic pub -r 10 /decision_num rm_decision_interfaces/msg/DecisionNum "{
 
 ros2 topic pub -r 10 /robot_status rm_decision_interfaces/msg/RobotStatus "{
     robot_id: 7,
-    current_hp: 100,
+    current_hp: 400,
     shooter_heat: 0,
     team_color: 0,
     is_attacked: 0,
@@ -44,17 +44,6 @@ ros2 topic pub -r 5 /detector/armors auto_aim_interfaces/msg/Armors "{
     frame_id: 'my_frame'
   },
 
-  # armors: [ # 取消注释，代表识别到敌人
-  #   {
-  #     number: '1',
-  #     type: '0',
-  #     distance_to_image_center: 1.0,
-  #     pose: {
-  #       position: {x: 0.0, y: 0.0, z: 0.0},
-  #       orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}
-  #     }
-  #   }
-  # ]
 }" &
 
 wait

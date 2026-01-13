@@ -3,15 +3,6 @@
     <include path="basic.xml"/>
     <!-- Description of Node Models (used by Groot) -->
     <TreeNodesModel>
-        <Action ID="GetCurrentLocation" editable="true">
-            <output_port name="current_location" default="{current_location}"/>
-        </Action>
-        <Action ID="IsAttaked" editable="true">
-            <input_port name="message" default="{robot_status}"/>
-        </Action>
-        <Action ID="IsDetectEnemy" editable="true">
-            <input_port name="message" default="{armors}"/>
-        </Action>
         <Action ID="IsFriendOK" editable="true">
             <input_port name="message" default="{robot_hp}"/>
             <input_port name="friend_color" default="red"/>
@@ -32,18 +23,9 @@
             <input_port name="hp_threshold" default="100"/>
             <input_port name="heat_threshold" default="350"/>
         </Action>
-        <Action ID="MoveAround" editable="true">
-            <input_port name="expected_nearby_goal_count" default="5"/>
-            <input_port name="expected_dis" default="0.3"/>
-            <input_port name="message" default="{current_location}"/>
-        </Action>
         <Decorator ID="RateController">
             <input_port name="hz">Rate</input_port>
         </Decorator>
-        <Action ID="RobotControl" editable="true">
-            <input_port name="stop_gimbal_scan" default="True"/>
-            <input_port name="chassis_spin_vel" default="False"/>
-        </Action>
         <Action ID="SendGoal" editable="true">
             <input_port name="goal_pose" default="0;0;0; 0;0;0;1"/>
             <input_port name="action_name" default="navigate_to_pose"/>

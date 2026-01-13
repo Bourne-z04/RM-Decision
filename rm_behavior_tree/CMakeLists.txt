@@ -60,25 +60,15 @@ ament_auto_add_library(is_status_ok SHARED
 )
 add_target_dependencies(is_status_ok)
 
-ament_auto_add_library(is_attacked SHARED 
-    plugins/condition/is_attacked.cpp
-)
-add_target_dependencies(is_attacked)
-
-ament_auto_add_library(is_friend_ok SHARED 
+ament_auto_add_library(is_friend_ok SHARED
     plugins/condition/is_friend_ok.cpp
 )
 add_target_dependencies(is_friend_ok)
 
-ament_auto_add_library(is_outpost_ok SHARED 
+ament_auto_add_library(is_outpost_ok SHARED
     plugins/condition/is_outpost_ok.cpp
 )
 add_target_dependencies(is_outpost_ok)
-
-ament_auto_add_library(is_detect_enemy SHARED 
-    plugins/condition/is_detect_enemy.cpp
-)
-add_target_dependencies(is_detect_enemy)
 
 # Actions
 ament_auto_add_library(send_goal SHARED 
@@ -116,15 +106,6 @@ ament_auto_add_library(get_current_location SHARED
 )
 add_target_dependencies(get_current_location)
 
-ament_auto_add_library(move_around SHARED 
-    plugins/action/move_around.cpp
-)
-add_target_dependencies(move_around)
-
-ament_auto_add_library(robot_control SHARED 
-    plugins/action/robot_control.cpp
-)
-add_target_dependencies(robot_control)
 
 ament_auto_add_library(print_message SHARED 
     plugins/action/print_message.cpp
