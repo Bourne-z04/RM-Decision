@@ -34,12 +34,10 @@ int main(int argc, char ** argv)
     "sub_robot_status",
     "sub_game_status",
     "sub_armors",
-    "sub_decision_num",
   };
 
   const std::vector<std::string> bt_plugin_libs = {
     "rate_controller",
-    "decision_switch",
     "is_game_time",
     "is_status_ok",
     "is_friend_ok",
