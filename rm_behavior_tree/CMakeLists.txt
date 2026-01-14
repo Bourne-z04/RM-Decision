@@ -20,7 +20,7 @@ ament_auto_find_build_dependencies()
 ###########
 
 set(PACKAGE_INCLUDE_DEPENDS
-    rm_decision_interfaces
+    sys_interfaces
     rclcpp
     std_msgs
     behaviortree_cpp
@@ -99,10 +99,15 @@ ament_auto_add_library(get_current_location SHARED
 add_target_dependencies(get_current_location)
 
 
-ament_auto_add_library(print_message SHARED 
+ament_auto_add_library(print_message SHARED
     plugins/action/print_message.cpp
 )
 add_target_dependencies(print_message)
+
+ament_auto_add_library(select_random_occupy_backup SHARED
+    plugins/action/select_random_occupy_backup.cpp
+)
+add_target_dependencies(select_random_occupy_backup)
 
 ament_auto_package(
   USE_SCOPED_HEADER_INSTALL_DIR

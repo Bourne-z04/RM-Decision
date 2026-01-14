@@ -19,9 +19,13 @@
 
     Robomaster 哨兵决策树部分
 
-- rm_decision_interfaces
+- sys_interfaces
 
     对接裁判系统的自定义 ROS 消息类型
+
+- nav_interfaces
+
+    导航相关的自定义 ROS 消息类型
 
 ## 环境配置
 
@@ -36,8 +40,8 @@
 2. 克隆仓库
 
     ```sh
-    git clone https://gitee.com/SMBU-POLARBEAR/rm_behavior_tree.git
-    cd rm_behavior_tree
+    git clone https://github.com/Bourne-z04/RM-Decision.git
+    cd RM-Decision
     ```
 
 3. 编译
@@ -61,7 +65,7 @@
 2. （可选）开启虚拟裁判系统话题发布（用于测试）
 
     ```sh
-    ./rm_decision_interfaces/publish_script.sh
+    ./publish_script.sh
     ```
 
 ## 当前的行为树预设
@@ -72,10 +76,14 @@
 （2）判断比赛是否进行。若比赛非进行，则持续以 1Hz 发 “Home” 目标。若比赛进行则进入决策主循环。
 
 主循环：
-（1）进入进攻分支前置条件：自身状态良好（血量≥200、热量≤150），否则进入撤退分支。
-（2）进入进攻分支，下发控制区 OccupyArea 目标
-（3）否则转撤退分支，下发补给区 SupplyArea目标。
-（4）若自身状态再次满足"血量≥200、热量≤150"，进入进攻分支。
+（1）进入进攻分支前置条件：自身状态良好（血量≥200），否则进入撤退分支。
+（2）进入进攻分支。
+（3）否则转撤退分支，发布补给区 SupplyArea目标。
+（4）若自身状态再次满足"血量≥200"，进入进攻分支。
+
+进攻分支：
+（1）发布控制区 OccupyArea 目标。
+（2）若收到OccupyArea不可达，随机选择OccupyArea周围的点，作为新的目标点发布。
 
 ## 使用 Groot 可视化行为树
 
