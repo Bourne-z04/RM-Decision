@@ -15,14 +15,14 @@
           <RateController hz="1">
             <SendGoal name="OccupyArea"
                             goal_pose="4.89;-3;0;0;0;0;1"
-                            action_name="navigate_to_pose"/>
+                            action_name="/navigate_to_pose"/>
           </RateController>
         </ReactiveSequence>
         <ReactiveSequence>
           <RateController hz="1">
             <SendGoal name="SupplyArea"
                             goal_pose="0;0;0;0;0;0;1"
-                            action_name="navigate_to_pose"/>
+                            action_name="/navigate_to_pose"/>
           </RateController>
         </ReactiveSequence>
       </WhileDoElse>
@@ -47,7 +47,7 @@
       <input_port name="goal_pose"
                   default="0;0;0; 0;0;0;1"/>
       <input_port name="action_name"
-                  default="navigate_to_pose"/>
+                  default="/navigate_to_pose"/>
     </Action>
     <Action ID="SubGameStatus"
             editable="true">

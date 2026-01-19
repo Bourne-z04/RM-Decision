@@ -33,6 +33,7 @@ int main(int argc, char ** argv)
     // 注册自定义插件
     factory.registerFromPlugin(BT::SharedLibrary::getOSName("rate_controller"));
     factory.registerFromPlugin(BT::SharedLibrary::getOSName("is_game_time"));
+    
     RegisterRosNode(factory, BT::SharedLibrary::getOSName("send_goal"), params_send_goal);
     RegisterRosNode(factory, BT::SharedLibrary::getOSName("sub_game_status"), params_send_goal);
 
