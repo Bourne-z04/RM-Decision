@@ -66,7 +66,7 @@ int main(int argc, char ** argv)
   BT::Groot2Publisher publisher(tree, port);
 
   while (rclcpp::ok()) {
-    tree.tickWhileRunning(std::chrono::milliseconds(10));
+    tree.tickWhileRunning(std::chrono::milliseconds(100));
   }
 
   rclcpp::shutdown();
