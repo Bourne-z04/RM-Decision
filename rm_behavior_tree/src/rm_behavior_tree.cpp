@@ -23,11 +23,14 @@ int main(int argc, char ** argv)
   std::cout << "Start RM_Behavior_Tree" << '\n';
   RCLCPP_INFO(node->get_logger(), "Load bt_xml: \e[1;42m %s \e[0m", bt_xml_path.c_str());
 
+  // 创建独立的 ROS 节点，确保其生命周期与主程序一致
+  auto update_msg_node = std::make_shared<rclcpp::Node>("update_msg");
   BT::RosNodeParams params_update_msg;
-  params_update_msg.nh = std::make_shared<rclcpp::Node>("update_msg");
+  params_update_msg.nh = update_msg_node;
 
+  auto send_goal_node = std::make_shared<rclcpp::Node>("send_goal");
   BT::RosNodeParams params_send_goal;
-  params_send_goal.nh = std::make_shared<rclcpp::Node>("send_goal");
+  params_send_goal.nh = send_goal_node;
   params_send_goal.default_port_value = "goal_pose";
 
   // 批量注册插件
@@ -36,12 +39,19 @@ int main(int argc, char ** argv)
     "is_game_time",
   };
 
+  // 消息更新插件列表
+  const std::vector<std::string> msg_update_plugin_libs = {
+    "sub_game_status",
+  };
+
   for (const auto & p : bt_plugin_libs) {
     factory.registerFromPlugin(BT::SharedLibrary::getOSName(p));
   }
 
   // 批量注册消息更新插件节点
-  RegisterRosNode(factory, BT::SharedLibrary::getOSName("sub_game_status"), params_update_msg);
+  for (const auto & p : msg_update_plugin_libs) {
+    RegisterRosNode(factory, BT::SharedLibrary::getOSName(p), params_update_msg);
+  }
 
   // 单独注册 send_goal 节点
   RegisterRosNode(factory, BT::SharedLibrary::getOSName("send_goal"), params_send_goal);
