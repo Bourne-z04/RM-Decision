@@ -18,7 +18,7 @@ bool SendGoalAction::setGoal(nav2_msgs::action::NavigateToPose::Goal & goal)
   }
   goal.pose = res.value();
   goal.pose.header.frame_id = "map";
-  goal.pose.header.stamp = rclcpp::Clock().now();
+  goal.pose.header.stamp = rclcpp::Clock(RCL_ROS_TIME).now();
 
   std::cout << "Goal_pose: [ "
     << std::fixed << std::setprecision(1)
