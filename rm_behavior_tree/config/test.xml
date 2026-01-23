@@ -11,20 +11,16 @@
                     game_progress="4"
                     lower_remain_time="0"
                     higher_remain_time="300"/>
-        <ReactiveSequence>
-          <RateController hz="1">
+        <RateController hz="1">
             <SendGoal name="OccupyArea"
                             goal_pose="4.89;-3;0;0;0;0;1"
                             action_name="/navigate_to_pose"/>
-          </RateController>
-        </ReactiveSequence>
-        <ReactiveSequence>
-          <RateController hz="1">
+        </RateController>
+        <RateController hz="1">
             <SendGoal name="SupplyArea"
                             goal_pose="0;0;0;0;0;0;1"
                             action_name="/navigate_to_pose"/>
-          </RateController>
-        </ReactiveSequence>
+        </RateController>      
       </WhileDoElse>
     </ReactiveSequence>
   </BehaviorTree>
