@@ -37,11 +37,14 @@ int main(int argc, char ** argv)
   const std::vector<std::string> bt_plugin_libs = {
     "rate_controller",
     "is_game_time",
+    "is_retreat",
+    "is_attack",
   };
 
   // 消息更新插件列表
   const std::vector<std::string> msg_update_plugin_libs = {
     "sub_game_status",
+    "sub_robot_status",
   };
 
   for (const auto & p : bt_plugin_libs) {

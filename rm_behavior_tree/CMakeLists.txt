@@ -39,6 +39,11 @@ ament_auto_add_library(sub_game_status SHARED
 )
 add_target_dependencies(sub_game_status)
 
+ament_auto_add_library(sub_robot_status SHARED
+    plugins/action/sub_robot_status.cpp
+)
+add_target_dependencies(sub_robot_status)
+
 # Decorators
 ament_auto_add_library(rate_controller SHARED
     plugins/decorator/rate_controller.cpp
@@ -50,6 +55,16 @@ ament_auto_add_library(is_game_time SHARED
     plugins/condition/is_game_time.cpp
 )
 add_target_dependencies(is_game_time)
+
+ament_auto_add_library(is_retreat SHARED
+    plugins/condition/is_retreat.cpp
+)
+add_target_dependencies(is_retreat)
+
+ament_auto_add_library(is_attack SHARED
+    plugins/condition/is_attack.cpp
+)
+add_target_dependencies(is_attack)
 
 ament_auto_package(
   INSTALL_TO_SHARE
