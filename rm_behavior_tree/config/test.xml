@@ -23,21 +23,14 @@
                                 goal_pose="0;0;0;0;0;0;1"
                                 action_name="/navigate_to_pose"/>
             </RateController>
-            <WhileDoElse>
-              <IsAttack name="CanAttack"
-                        message="{robot_status}"
-                        hp_threshold_attack="400"/>
-              <RateController hz="1">
-                  <SendGoal name="OccupyArea"
-                                  goal_pose="4.89;-3;0;0;0;0;1"
-                                  action_name="/navigate_to_pose"/>
-              </RateController>
-              <RateController hz="1">
-                  <SendGoal name="SupplyArea"
-                                  goal_pose="0;0;0;0;0;0;1"
-                                  action_name="/navigate_to_pose"/>
-              </RateController>
-            </WhileDoElse>
+            <Sequence>
+                <Sleep msec="2000"/>
+                <RateController hz="1">
+                    <SendGoal name="OccupyArea"
+                                    goal_pose="4.89;-3;0;0;0;0;1"
+                                    action_name="/navigate_to_pose"/>
+                </RateController>
+            </Sequence>
           </WhileDoElse>
         </ReactiveSequence>
         <RateController hz="1">
@@ -51,12 +44,10 @@
 
   <!-- Description of Node Models (used by Groot) -->
   <TreeNodesModel>
-    <Action ID="IsAttack"
+    <Action ID="Sleep"
             editable="true">
-      <input_port name="message"
-                  default="{robot_status}"/>
-      <input_port name="hp_threshold_attack"
-                  default="400"/>
+      <input_port name="msec"
+                  default="1000"/>
     </Action>
     <Action ID="IsRetreat"
             editable="true">
