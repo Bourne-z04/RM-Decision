@@ -44,6 +44,11 @@ ament_auto_add_library(sub_robot_status SHARED
 )
 add_target_dependencies(sub_robot_status)
 
+ament_auto_add_library(send_spin SHARED
+    plugins/action/send_spin.cpp
+)
+add_target_dependencies(send_spin)
+
 # Decorators
 ament_auto_add_library(rate_controller SHARED
     plugins/decorator/rate_controller.cpp

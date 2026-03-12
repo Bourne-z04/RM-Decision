@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>sys_interfaces</name>
+  <name>interfaces</name>
   <version>1.0.0</version>
   <description>Robomaster 2026 referee system information to ROS CustomMsg</description>
   <maintainer email="354093@whut.edu.cn">Bourne</maintainer>
