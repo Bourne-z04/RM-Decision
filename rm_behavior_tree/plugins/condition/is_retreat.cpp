@@ -11,7 +11,7 @@ IsRetreatCondition::IsRetreatCondition(const std::string & name, const BT::NodeC
 BT::NodeStatus IsRetreatCondition::checkIsRetreat()
 {
   int hp_threshold_retreat;
-  auto msg = getInput<sys_interfaces::msg::RobotStatus>("message");
+  auto msg = getInput<interfaces::msg::RobotStatus>("message");
   getInput("hp_threshold_retreat", hp_threshold_retreat);
 
   if (!msg) {

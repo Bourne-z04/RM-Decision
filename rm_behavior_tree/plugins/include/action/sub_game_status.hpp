@@ -2,11 +2,11 @@
 #define RM_BEHAVIOR_TREE__PLUGINS__ACTION__SUB_ALL_ROBOT_HP_HPP_
 
 #include "behaviortree_ros2/bt_topic_sub_node.hpp"
-#include "sys_interfaces/msg/game_status.hpp"
+#include "interfaces/msg/game_status.hpp"
 
 namespace rm_behavior_tree
 {
-class SubGameStatusAction : public BT::RosTopicSubNode<sys_interfaces::msg::GameStatus>
+class SubGameStatusAction : public BT::RosTopicSubNode<interfaces::msg::GameStatus>
 {
 public:
   SubGameStatusAction(
@@ -16,11 +16,11 @@ public:
   {
     return {
       BT::InputPort<std::string>("topic_name"),
-      BT::OutputPort<sys_interfaces::msg::GameStatus>("game_status")};
+      BT::OutputPort<interfaces::msg::GameStatus>("game_status")};
   }
 
   BT::NodeStatus onTick(
-    const std::shared_ptr<sys_interfaces::msg::GameStatus> & last_msg) override;
+    const std::shared_ptr<interfaces::msg::GameStatus> & last_msg) override;
 };
 }  // namespace rm_behavior_tree
 

@@ -2,7 +2,7 @@
 #define RM_BEHAVIOR_TREE__PLUGINS__CONDITION__IS_RETREAT_HPP_
 
 #include "behaviortree_cpp/condition_node.h"
-#include "sys_interfaces/msg/robot_status.hpp"
+#include "interfaces/msg/robot_status.hpp"
 
 namespace rm_behavior_tree
 {
@@ -25,7 +25,7 @@ public:
   static BT::PortsList providedPorts()
   {
     return {
-      BT::InputPort<sys_interfaces::msg::RobotStatus>("message"),
+      BT::InputPort<interfaces::msg::RobotStatus>("message"),
       BT::InputPort<int>("hp_threshold_retreat")};
   }
 };

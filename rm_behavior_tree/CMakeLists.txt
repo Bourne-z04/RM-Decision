@@ -14,7 +14,7 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
     std_msgs
     behaviortree_cpp
     behaviortree_ros2
-    sys_interfaces
+    interfaces
 )
 
 # 定义宏函数 add_target_dependencies
