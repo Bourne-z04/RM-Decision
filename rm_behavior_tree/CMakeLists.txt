@@ -49,6 +49,11 @@ ament_auto_add_library(send_spin SHARED
 )
 add_target_dependencies(send_spin)
 
+ament_auto_add_library(get_current_location SHARED
+    plugins/action/get_current_location.cpp
+)
+add_target_dependencies(get_current_location)
+
 # Decorators
 ament_auto_add_library(rate_controller SHARED
     plugins/decorator/rate_controller.cpp
