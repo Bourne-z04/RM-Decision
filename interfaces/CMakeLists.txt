@@ -13,6 +13,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/GameStatus.msg"
   "msg/RobotStatus.msg"
   "msg/SpinVelocity.msg"
+  "msg/Position.msg"
 
   DEPENDENCIES
     std_msgs

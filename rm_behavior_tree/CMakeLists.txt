@@ -12,6 +12,8 @@ ament_auto_find_build_dependencies()
 set(THIS_PACKAGE_INCLUDE_DEPENDS
     rclcpp
     std_msgs
+    nav_msgs
+    geometry_msgs
     behaviortree_cpp
     behaviortree_ros2
     interfaces
@@ -44,15 +46,15 @@ ament_auto_add_library(sub_robot_status SHARED
 )
 add_target_dependencies(sub_robot_status)
 
+ament_auto_add_library(sub_robot_position SHARED
+    plugins/action/sub_robot_position.cpp
+)
+add_target_dependencies(sub_robot_position)
+
 ament_auto_add_library(send_spin SHARED
     plugins/action/send_spin.cpp
 )
 add_target_dependencies(send_spin)
-
-ament_auto_add_library(get_current_location SHARED
-    plugins/action/get_current_location.cpp
-)
-add_target_dependencies(get_current_location)
 
 # Decorators
 ament_auto_add_library(rate_controller SHARED

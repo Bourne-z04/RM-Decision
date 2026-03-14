@@ -70,7 +70,7 @@ BT::NodeStatus SendGoalAction::onFeedback(
 
 BT::NodeStatus SendGoalAction::onFailure(BT::ActionNodeErrorCode error)
 {
-  RCLCPP_ERROR(logger(), "SendGoalAction failed with error code: %d", error);
+  //RCLCPP_ERROR(logger(), "SendGoalAction failed with error code: %d", error);
   return BT::NodeStatus::FAILURE;
 }
 
