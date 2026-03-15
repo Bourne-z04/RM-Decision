@@ -14,6 +14,7 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
     std_msgs
     nav_msgs
     geometry_msgs
+    tf2_ros
     behaviortree_cpp
     behaviortree_ros2
     interfaces
@@ -50,6 +51,11 @@ ament_auto_add_library(send_spin SHARED
     plugins/action/send_spin.cpp
 )
 add_target_dependencies(send_spin)
+
+ament_auto_add_library(get_current_location SHARED
+    plugins/action/get_current_location.cpp
+)
+add_target_dependencies(get_current_location)
 
 # Decorators
 ament_auto_add_library(rate_controller SHARED
