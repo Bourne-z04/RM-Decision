@@ -20,7 +20,8 @@ public:
   {
     return providedBasicPorts({
       BT::InputPort<bool>("is_spin"),        // 是否转动
-      BT::InputPort<float>("spin_velocity") // 转速 (rad/s)
+      BT::InputPort<float>("spin_velocity"), // 转速 (rad/s)
+      BT::InputPort<std::string>("topic_name")  // topic名称
     });
   }
 

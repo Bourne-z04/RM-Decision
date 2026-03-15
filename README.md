@@ -22,6 +22,7 @@ chmod +x publish.sh
 ./publish.sh
 
 ### 决策
+
 cd rm_behavior_tree
 
 chmod +x run.sh
