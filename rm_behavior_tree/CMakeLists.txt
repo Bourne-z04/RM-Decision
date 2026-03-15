@@ -17,7 +17,6 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
     tf2_ros
     behaviortree_cpp
     behaviortree_ros2
-    interfaces
 )
 
 # 定义宏函数 add_target_dependencies

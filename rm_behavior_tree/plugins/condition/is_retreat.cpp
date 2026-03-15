@@ -11,16 +11,15 @@ IsRetreatCondition::IsRetreatCondition(const std::string & name, const BT::NodeC
 BT::NodeStatus IsRetreatCondition::checkIsRetreat()
 {
   int hp_threshold_retreat;
-  auto msg = getInput<interfaces::msg::RobotStatus>("message");
+  auto msg = getInput<uint16_t>("message");
   getInput("hp_threshold_retreat", hp_threshold_retreat);
 
   if (!msg) {
-    throw BT::RuntimeError("missing required input [robot_status]: ", msg.error());
-    std::cout << "missing required input [robot_status]" << '\n';
+    throw BT::RuntimeError("missing required input [ally_7_robot_hp]: ", msg.error());
     return BT::NodeStatus::FAILURE;
   }
 
-  if (msg->ally_7_robot_hp < hp_threshold_retreat) {
+  if (msg.value() < hp_threshold_retreat) {
     std::cout << "血量过低，需要撤退" << '\n';
     return BT::NodeStatus::SUCCESS;
   } else {

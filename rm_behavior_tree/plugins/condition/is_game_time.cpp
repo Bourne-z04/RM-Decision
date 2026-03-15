@@ -10,19 +10,15 @@ IsGameTimeCondition::IsGameTimeCondition(const std::string & name, const BT::Nod
 
 BT::NodeStatus IsGameTimeCondition::checkGameStart()
 {
-  int game_progress, lower_remain_time, higher_remain_time;
-  auto msg = getInput<interfaces::msg::GameStatus>("message");
+  int game_progress;
+  auto msg = getInput<uint8_t>("message");
   getInput("game_progress", game_progress);
-  getInput("lower_remain_time", lower_remain_time);
-  getInput("higher_remain_time", higher_remain_time);
+
   if (!msg) {
-    // std::cout << "missing required input [game_status]" << '\n';
     return BT::NodeStatus::FAILURE;
   }
 
-  if (
-    msg->game_progress == game_progress && msg->stage_remain_time >= lower_remain_time &&
-    msg->stage_remain_time <= higher_remain_time) {
+  if (msg.value() == game_progress) {
     return BT::NodeStatus::SUCCESS;
   } else {
     return BT::NodeStatus::FAILURE;
