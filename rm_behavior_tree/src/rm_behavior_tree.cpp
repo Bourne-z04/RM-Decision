@@ -29,11 +29,15 @@ int main(int argc, char ** argv)
   params_send_goal.nh = send_goal_node;
   params_send_goal.default_port_value = "goal_pose";
 
+  auto send_spin_node = std::make_shared<rclcpp::Node>("send_spin");
+  BT::RosNodeParams params_send_spin;
+  params_send_spin.nh = send_spin_node;
+  params_send_spin.default_port_value = "/spin_velocity";
+
   // clang-format off
   const std::vector<std::string> msg_update_plugin_libs = {
     "sub_game_status",
     "sub_robot_status",
-    "sub_robot_position",
   };
 
   const std::vector<std::string> bt_plugin_libs = {
@@ -52,6 +56,8 @@ int main(int argc, char ** argv)
   }
 
   RegisterRosNode(factory, BT::SharedLibrary::getOSName("send_goal"), params_send_goal);
+
+  RegisterRosNode(factory, BT::SharedLibrary::getOSName("send_spin"), params_send_spin);
 
   auto tree = factory.createTreeFromFile(bt_xml_path);
 

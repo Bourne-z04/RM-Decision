@@ -1,4 +1,5 @@
 #include "action/send_spin.hpp"
+#include "std_msgs/msg/float32.hpp"
 
 namespace rm_behavior_tree
 {
@@ -9,26 +10,20 @@ SendSpinAction::SendSpinAction(
 {
 }
 
-bool SendSpinAction::setMessage(interfaces::msg::SpinVelocity & msg)
+bool SendSpinAction::setMessage(std_msgs::msg::Float32 & msg)
 {
   // 获取输入参数
-  float max_velocity = 3.0;   // 默认最大转速
-  float frequency = 0.5;     // 默认频率 0.5Hz
-  getInput("max_velocity", max_velocity);
-  getInput("frequency", frequency);
+  bool is_spin = false;      // 是否转动
+  float spin_velocity = 0.5; // 转速 (rad/s)
+  getInput("is_spin", is_spin);
+  getInput("spin_velocity", spin_velocity);
 
-  // 初始化起始时间
-  if (!initialized_) {
-    start_time_ = node_->now();
-    initialized_ = true;
+  // 根据 is_spin 决定是否转动
+  if (is_spin) {
+    msg.data = spin_velocity;
+  } else {
+    msg.data = 0.0;
   }
-
-  // 计算正弦值: sin(2 * PI * frequency * time)
-  double elapsed_time = (node_->now() - start_time_).seconds();
-  float sine_value = std::sin(2.0 * M_PI * frequency * elapsed_time);
-
-  // 应用最大转速
-  msg.chassis_spin_vel = sine_value * max_velocity;
 
   return true;
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4"
+      main_tree_to_execute="BehaviorTree">
+  <BehaviorTree ID="BehaviorTree">
+    <ReactiveSequence>
+      <!-- 测试 SendSpinAction：小陀螺转动 -->
+      <RateController hz="1">
+        <SendSpin name="SpinTest"
+                  is_spin="true"
+                  spin_velocity="0.5"
+                  topic_name="/cmd_vel_wz"/>
+      </RateController>
+    </ReactiveSequence>
+  </BehaviorTree>
+
+  <!-- Description of Node Models -->
+  <TreeNodesModel>
+    <Action ID="SendSpin"
+            editable="true">
+      <input_port name="is_spin"
+                  default="true"/>
+      <input_port name="spin_velocity"
+                  default="0.5"/>
+      <input_port name="topic_name"
+                  default="/cmd_vel_wz"/>
+    </Action>
+    <Decorator ID="RateController">
+      <input_port name="hz"
+                  default="1.0"/>
+    </Decorator>
+  </TreeNodesModel>
+
+</root>
