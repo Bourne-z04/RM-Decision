@@ -48,6 +48,7 @@ int main(int argc, char ** argv)
     "rate_controller",
     "is_game_time",
     "is_retreat",
+    "is_near_goal",
   };
   // clang-format on
 

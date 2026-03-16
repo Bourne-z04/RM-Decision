@@ -20,7 +20,6 @@ BT::NodeStatus IsRetreatCondition::checkIsRetreat()
   }
 
   if (msg.value() < hp_threshold_retreat) {
-    std::cout << "血量过低，需要撤退" << '\n';
     return BT::NodeStatus::SUCCESS;
   } else {
     return BT::NodeStatus::FAILURE;

@@ -73,6 +73,11 @@ ament_auto_add_library(is_retreat SHARED
 )
 add_target_dependencies(is_retreat)
 
+ament_auto_add_library(is_near_goal SHARED
+    plugins/condition/is_near_goal.cpp
+)
+add_target_dependencies(is_near_goal)
+
 
 ament_auto_package(
   INSTALL_TO_SHARE

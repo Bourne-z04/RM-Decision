@@ -2,6 +2,7 @@
 #define RM_BEHAVIOR_TREE__PLUGINS__CONDITION__IS_NEAR_GOAL_HPP_
 
 #include "behaviortree_cpp/condition_node.h"
+#include "bt_conversions.hpp"
 #include "geometry_msgs/msg/pose_stamped.hpp"
 #include "geometry_msgs/msg/transform_stamped.hpp"
 
