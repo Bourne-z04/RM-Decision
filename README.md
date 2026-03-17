@@ -16,14 +16,10 @@ colcon build
 
 ### 模拟裁判系统
 
-cd rm_behavior_tree
-
 chmod +x publish.sh
 ./publish.sh
 
 ### 决策
-
-cd rm_behavior_tree
 
 chmod +x run.sh
 ./run.sh
