@@ -34,10 +34,6 @@ int main(int argc, char ** argv)
   params_send_spin.nh = send_spin_node;
   params_send_spin.default_port_value = "/spin_velocity";
 
-  auto get_current_location_node = std::make_shared<rclcpp::Node>("get_current_location");
-  BT::RosNodeParams params_get_current_location;
-  params_get_current_location.nh = get_current_location_node;
-
   // clang-format off
   const std::vector<std::string> msg_update_plugin_libs = {
     "sub_game_status",
@@ -49,6 +45,7 @@ int main(int argc, char ** argv)
     "is_game_time",
     "is_retreat",
     "is_near_goal",
+    "get_current_location",
   };
   // clang-format on
 
@@ -63,9 +60,6 @@ int main(int argc, char ** argv)
   RegisterRosNode(factory, BT::SharedLibrary::getOSName("send_goal"), params_send_goal);
 
   RegisterRosNode(factory, BT::SharedLibrary::getOSName("send_spin"), params_send_spin);
-
-  RegisterRosNode(
-    factory, BT::SharedLibrary::getOSName("get_current_location"), params_get_current_location);
 
   auto tree = factory.createTreeFromFile(bt_xml_path);
 

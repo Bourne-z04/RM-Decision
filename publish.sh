@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Source ROS2 workspace
-source ../install/setup.bash
+source ./install/setup.bash
 
 # Publish game progress at 1 Hz 
 ros2 topic pub -r 1 /feedback_game_progress std_msgs/msg/UInt8 "{
