@@ -16,7 +16,7 @@ def generate_launch_description():
     rm_behavior_tree_node = Node(
         package='rm_behavior_tree',
         executable='rm_behavior_tree',
-        respawn=True,
+        respawn=False,
         respawn_delay=3,
         parameters=[
             {

@@ -10,7 +10,7 @@
 
 ## 编译
 
-colcon build 
+colcon build --symlink-install
 
 ## 启动
 

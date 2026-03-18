@@ -2,6 +2,7 @@
 #define RM_BEHAVIOR_TREE__PLUGINS__ACTION__GET_CURRENT_LOCATION_HPP_
 
 #include "behaviortree_cpp/action_node.h"
+#include "rclcpp/rclcpp.hpp"
 #include "tf2_ros/buffer.h"
 #include "tf2_ros/transform_listener.h"
 
@@ -21,6 +22,7 @@ public:
   }
 
 private:
+  rclcpp::Node::SharedPtr node_{nullptr};
   std::shared_ptr<tf2_ros::TransformListener> tf_listener_{nullptr};
   std::shared_ptr<tf2_ros::Buffer> tf_buffer_;
   rclcpp::Logger logger_{rclcpp::get_logger("rm_behavior_tree")};

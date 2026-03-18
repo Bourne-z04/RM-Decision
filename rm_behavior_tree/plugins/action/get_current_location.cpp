@@ -1,6 +1,7 @@
 #include "action/get_current_location.hpp"
 
 #include <rclcpp/logging.hpp>
+#include <rclcpp/time.hpp>
 
 namespace rm_behavior_tree
 {
@@ -9,14 +10,14 @@ GetCurrentLocationAction::GetCurrentLocationAction(
   const std::string & name, const BT::NodeConfig & config)
 : BT::SyncActionNode(name, config)
 {
-  auto node = std::make_shared<rclcpp::Node>("get_current_location");
-  if (!node) {
+  node_ = std::make_shared<rclcpp::Node>("get_current_location");
+  if (!node_) {
     throw std::runtime_error("Failed to create node 'get_current_location'");
   }
 
-  auto clock = node->get_clock();
+  auto clock = node_->get_clock();
   tf2::Duration buffer_duration(tf2::durationFromSec(10.0));  // 10 seconds buffer
-  tf_buffer_ = std::make_shared<tf2_ros::Buffer>(clock, buffer_duration, node);
+  tf_buffer_ = std::make_shared<tf2_ros::Buffer>(clock, buffer_duration, node_);
   if (!tf_buffer_) {
     throw std::runtime_error("Failed to create tf2_ros::Buffer");
   }
@@ -32,7 +33,9 @@ BT::NodeStatus GetCurrentLocationAction::tick()
   geometry_msgs::msg::TransformStamped t;
 
   try {
-    t = tf_buffer_->lookupTransform("map", "base_link", tf2::TimePointZero);
+    // Use tf2::TimePointZero to request the latest available transform
+    // In ROS2, TimePointZero means "latest" (equivalent to ROS1's Time(0))
+    t = tf_buffer_->lookupTransform("map", "base_link", tf2::TimePointZero, tf2::durationFromSec(0.5));
     setOutput("current_location", t);
 
     RCLCPP_DEBUG(
