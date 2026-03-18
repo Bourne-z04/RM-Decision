@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root BTCPP_format="4" main_tree_to_execute="BehaviorTree">
+  
+  <BehaviorTree ID="BehaviorTree">
+    <ReactiveSequence>
+        <GetCurrentLocation name="GetLocation" current_location="{current_location}"/>
+        <SetBlackboard output_key="goal_pose" value="4.89;-3;0;0;0;0;1"/>
+        <IsNearGoal name="CheckNearGoal"
+                    current_location="{current_location}"
+                    goal_pose="{goal_pose}"
+                    distance_threshold="3.0"/>
+    </ReactiveSequence>
+  </BehaviorTree>
+
+  <TreeNodesModel>
+    <Action ID="GetCurrentLocation">
+      <output_port name="current_location" default="{current_location}">Output for current location</output_port>
+    </Action>
+    
+    <Condition ID="IsNearGoal">
+      <input_port name="current_location" default="{current_location}">Current robot location</input_port>
+      <input_port name="goal_pose" default="{goal_pose}">Target pose</input_port>
+      <input_port name="distance_threshold" default="3.0">Distance threshold (meters)</input_port>
+    </Condition>
+
+    <Decorator ID="RateController">
+      <input_port name="hz" default="1.0"/>
+    </Decorator>
+  </TreeNodesModel>
+
+</root>

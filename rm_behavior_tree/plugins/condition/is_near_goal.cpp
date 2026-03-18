@@ -1,5 +1,6 @@
 #include "condition/is_near_goal.hpp"
 #include <cmath>
+#include <rclcpp/logging.hpp>
 
 namespace rm_behavior_tree
 {
@@ -38,8 +39,10 @@ BT::NodeStatus IsNearGoalCondition::checkIsNearGoal()
 
   // 判断是否在阈值范围内
   if (distance < distance_threshold) {
+    //RCLCPP_INFO(rclcpp::get_logger("is_near_goal"), "Near goal! distance=%.3f, threshold=%.3f", distance, distance_threshold);
     return BT::NodeStatus::SUCCESS;
   } else {
+    //RCLCPP_INFO(rclcpp::get_logger("is_near_goal"), "Not near goal. distance=%.3f, threshold=%.3f", distance, distance_threshold);
     return BT::NodeStatus::FAILURE;
   }
 }
