@@ -16,8 +16,8 @@ BT::NodeStatus SubRobotStatusAction::onTick(
   if (last_msg)
   {
     RCLCPP_DEBUG(
-      logger(), "[%s] new message, ally_7_robot_hp: %u", name().c_str(), last_msg->data);
-    setOutput("ally_7_robot_hp", last_msg->data);
+      logger(), "[%s] new message, feedback_robot_hp: %u", name().c_str(), last_msg->data);
+    setOutput("feedback_robot_hp", last_msg->data);
   }
   return BT::NodeStatus::SUCCESS;
 }

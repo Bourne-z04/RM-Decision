@@ -46,6 +46,11 @@ ament_auto_add_library(sub_robot_status SHARED
 )
 add_target_dependencies(sub_robot_status)
 
+ament_auto_add_library(sub_deduction_reason SHARED
+    plugins/action/sub_deduction_reason.cpp
+)
+add_target_dependencies(sub_deduction_reason)
+
 ament_auto_add_library(send_spin SHARED
     plugins/action/send_spin.cpp
 )

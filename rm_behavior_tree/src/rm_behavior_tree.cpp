@@ -38,6 +38,7 @@ int main(int argc, char ** argv)
   const std::vector<std::string> msg_update_plugin_libs = {
     "sub_game_status",
     "sub_robot_status",
+    "sub_deduction_reason",
   };
 
   const std::vector<std::string> bt_plugin_libs = {

@@ -8,8 +8,8 @@ ros2 topic pub -r 1 /feedback_game_progress std_msgs/msg/UInt8 "{
     data: 4
 }" &
 
-# Publish robot hp at 3 Hz 
-ros2 topic pub -r 3 /feedback_ally_7_hp std_msgs/msg/UInt16 "{
+# Publish robot hp at 3 Hz
+ros2 topic pub -r 3 /feedback_robot_hp std_msgs/msg/UInt16 "{
     data: 300
 }" &
 

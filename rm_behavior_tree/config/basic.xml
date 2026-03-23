@@ -6,8 +6,8 @@
       <!-- 更新比赛状态和血量 -->
       <SubGameStatus topic_name="/feedback_game_progress"
                      game_progress="{game_progress}"/>
-      <SubRobotStatus topic_name="/feedback_ally_7_hp"
-                      ally_7_robot_hp="{ally_7_robot_hp}"/>
+      <SubRobotStatus topic_name="/feedback_robot_hp"
+                      feedback_robot_hp="{feedback_robot_hp}"/>
 
       <!-- 持续获取当前位置 -->
       <GetCurrentLocation name="GetLocation"
@@ -40,7 +40,7 @@
         <ReactiveSequence>
           <WhileDoElse>
             <IsRetreat name="NeedRetreat"
-                       message="{ally_7_robot_hp}"
+                       message="{feedback_robot_hp}"
                        hp_threshold_retreat="110"/>
 
             <!-- 撤退分支 -->
@@ -78,7 +78,7 @@
     </Action>
 
     <Condition ID="IsRetreat" editable="true">
-      <input_port name="message" default="{ally_7_robot_hp}"/>
+      <input_port name="message" default="{feedback_robot_hp}"/>
       <input_port name="hp_threshold_retreat" default="110"/>
     </Condition>
 
@@ -114,8 +114,8 @@
     </Action>
 
     <Action ID="SubRobotStatus" editable="true">
-      <input_port name="topic_name" default="/feedback_ally_7_hp"/>
-      <output_port name="ally_7_robot_hp" default="{ally_7_robot_hp}"/>
+      <input_port name="topic_name" default="/feedback_robot_hp"/>
+      <output_port name="feedback_robot_hp" default="{feedback_robot_hp}"/>
     </Action>
 
     <Decorator ID="IfThenElse" editable="true"/>

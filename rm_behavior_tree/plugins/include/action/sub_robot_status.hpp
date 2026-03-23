@@ -16,7 +16,7 @@ public:
   {
     return {
       BT::InputPort<std::string>("topic_name"),
-      BT::OutputPort<uint16_t>("ally_7_robot_hp")};
+      BT::OutputPort<uint16_t>("feedback_robot_hp")};
   }
 
   BT::NodeStatus onTick(
