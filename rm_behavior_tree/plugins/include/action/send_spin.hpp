@@ -4,6 +4,7 @@
 #include "behaviortree_ros2/bt_topic_pub_node.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/float32.hpp"
+#include <chrono>
 
 namespace rm_behavior_tree
 {
@@ -19,14 +20,17 @@ public:
   static BT::PortsList providedPorts()
   {
     return providedBasicPorts({
-      BT::InputPort<bool>("is_spin"),        // 是否转动
-      BT::InputPort<float>("spin_velocity"), // 转速 (rad/s)
-      BT::InputPort<std::string>("topic_name")  // topic名称
+      BT::InputPort<bool>("is_spin"),          // 是否转动
+      BT::InputPort<float>("spin_velocity"),   // 转速基准值 (rad/s)
+      BT::InputPort<float>("spin_amplitude"),  // 三角波幅值 (rad/s)
+      BT::InputPort<float>("spin_period"),     // 三角波周期 (s)
+      BT::InputPort<std::string>("topic_name") // topic名称
     });
   }
 
 private:
-  // 匀速转动，不需要保存时间状态
+  bool first_spin_tick_;                           // 首次开启spin标记
+  std::chrono::steady_clock::time_point spin_start_time_; // spin开启时间戳
 };
 
 }  // namespace rm_behavior_tree

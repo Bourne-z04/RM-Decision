@@ -23,3 +23,7 @@ chmod +x publish.sh
 
 chmod +x run.sh
 ./run.sh
+
+### 杀死进程
+lsof -i :1667
+kill -9 

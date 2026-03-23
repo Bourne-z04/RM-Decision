@@ -13,10 +13,10 @@
       <GetCurrentLocation name="GetLocation"
                           current_location="{current_location}"/>
 
-      <!-- 全局控制小陀螺：距离占领区 < 3.0 时转速=5，否则停转 -->
+      <!-- 全局控制小陀螺：距离中心 < 3.0 时转速=5，否则转速=1 -->
       <RateController hz="1">
         <IfThenElse>
-          <IsNearGoal name="CheckNearOccupyArea"
+          <IsNearGoal name="CheckNearCenter"
                       current_location="{current_location}"
                       goal_pose="4.89;-3;0;0;0;0;1"
                       distance_threshold="3.0"/>
@@ -25,13 +25,13 @@
                     spin_velocity="5.0"
                     topic_name="/cmd_vel_wz"/>
           <SendSpin name="SpinFar"
-                    is_spin="false"
-                    spin_velocity="5.0"
+                    is_spin="true"
+                    spin_velocity="1.0"
                     topic_name="/cmd_vel_wz"/>
         </IfThenElse>
       </RateController>
 
-      <!-- 比赛开始后执行撤退/占点逻辑，否则回家 -->
+      <!-- 比赛开始后执行撤退/进攻逻辑，否则回家 -->
       <WhileDoElse>
         <IsGameTime name="IsGameStart"
                     message="{game_progress}"
@@ -50,9 +50,9 @@
                         action_name="/navigate_to_pose"/>
             </RateController>
 
-            <!-- 非撤退分支 -->
+            <!-- 进攻分支 -->
             <Sequence>
-              <Sleep msec="2000"/>
+              <Sleep msec="3000"/>
               <RateController hz="1">
                 <SendGoal name="OccupyArea"
                           goal_pose="4.89;-3;0;0;0;0;1"
