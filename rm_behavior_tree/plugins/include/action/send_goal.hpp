@@ -18,7 +18,9 @@ public:
   {
     return {
       BT::InputPort<geometry_msgs::msg::PoseStamped>("goal_pose"),
-      BT::InputPort<std::string>("action_name")};
+      BT::InputPort<std::string>("action_name"),
+      BT::InputPort<bool>("move"),
+      BT::InputPort<double>("length")};
   }
 
   bool setGoal(Goal & goal) override;

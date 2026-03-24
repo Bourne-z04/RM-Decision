@@ -1,5 +1,6 @@
 #include "action/send_goal.hpp"
 #include "bt_conversions.hpp"
+#include <random>
 
 namespace rm_behavior_tree
 {
@@ -19,6 +20,19 @@ bool SendGoalAction::setGoal(nav2_msgs::action::NavigateToPose::Goal & goal)
   goal.pose = res.value();
   goal.pose.header.frame_id = "map";
   goal.pose.header.stamp = rclcpp::Clock(RCL_ROS_TIME).now();
+
+  auto move_opt = getInput<bool>("move");
+  double length = 1.0;
+  if (auto length_opt = getInput<double>("length")) {
+    length = length_opt.value();
+  }
+  if (move_opt && move_opt.value()) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(-length / 2.0, length / 2.0);
+    goal.pose.pose.position.x += dis(gen);
+    goal.pose.pose.position.y += dis(gen);
+  }
 
   std::cout << "Goal_pose: [ "
     << std::fixed << std::setprecision(1)

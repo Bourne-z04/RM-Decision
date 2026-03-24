@@ -83,6 +83,11 @@ ament_auto_add_library(is_near_goal SHARED
 )
 add_target_dependencies(is_near_goal)
 
+ament_auto_add_library(is_HP_deduction SHARED
+    plugins/condition/is_HP_deduction.cpp
+)
+add_target_dependencies(is_HP_deduction)
+
 
 ament_auto_package(
   INSTALL_TO_SHARE
