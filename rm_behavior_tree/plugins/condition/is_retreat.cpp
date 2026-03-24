@@ -10,18 +10,30 @@ IsRetreatCondition::IsRetreatCondition(const std::string & name, const BT::NodeC
 
 BT::NodeStatus IsRetreatCondition::checkIsRetreat()
 {
-  int hp_threshold_retreat;
   auto msg = getInput<uint16_t>("message");
-  getInput("hp_threshold_retreat", hp_threshold_retreat);
-
   if (!msg) {
-    throw BT::RuntimeError("missing required input [ally_7_robot_hp]: ", msg.error());
     return BT::NodeStatus::FAILURE;
   }
 
-  if (msg.value() < hp_threshold_retreat) {
+  int hp_threshold_retreat = 110;
+  int hp_threshold_recover = 400;
+  getInput("hp_threshold_retreat", hp_threshold_retreat);
+  getInput("hp_threshold_recover", hp_threshold_recover);
+
+  uint16_t current_hp = msg.value();
+
+  // 双阈值迟滞比较逻辑
+  if (is_retreating_) {
+    if (current_hp >= hp_threshold_recover) {
+      is_retreating_ = false;
+      return BT::NodeStatus::FAILURE;
+    }
     return BT::NodeStatus::SUCCESS;
   } else {
+    if (current_hp < hp_threshold_retreat) {
+      is_retreating_ = true;
+      return BT::NodeStatus::SUCCESS;
+    }
     return BT::NodeStatus::FAILURE;
   }
 }

@@ -10,7 +10,7 @@ ros2 topic pub -r 1 /feedback_game_progress std_msgs/msg/UInt8 "{
 
 # Publish robot hp at 3 Hz
 ros2 topic pub -r 3 /feedback_robot_hp std_msgs/msg/UInt16 "{
-    data: 270
+    data: 380
 }" &
 
 # Wait for all background processes

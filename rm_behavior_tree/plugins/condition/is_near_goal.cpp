@@ -18,16 +18,14 @@ BT::NodeStatus IsNearGoalCondition::checkIsNearGoal()
   auto distance_threshold_res = getInput<double>("distance_threshold");
 
   // 检查是否获取成功
-  if (!current_location) {
-    throw BT::RuntimeError("missing required input [current_location]: ", current_location.error());
+  if (!current_location || !goal_pose) {
+    return BT::NodeStatus::FAILURE;
   }
-  if (!goal_pose) {
-    throw BT::RuntimeError("missing required input [goal_pose]: ", goal_pose.error());
+
+  double distance_threshold = 2.0; 
+  if (distance_threshold_res) {
+    distance_threshold = distance_threshold_res.value();
   }
-  if (!distance_threshold_res) {
-    throw BT::RuntimeError("missing required input [distance_threshold]: ", distance_threshold_res.error());
-  }
-  double distance_threshold = distance_threshold_res.value();
 
   // 计算欧氏距离 (只比较 x, y 坐标，忽略 z)
   const auto & curr_trans = current_location->transform.translation;

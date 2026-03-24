@@ -27,9 +27,9 @@ bool SendGoalAction::setGoal(nav2_msgs::action::NavigateToPose::Goal & goal)
     length = length_opt.value();
   }
   if (move_opt && move_opt.value()) {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<> dis(-length / 2.0, length / 2.0);
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::uniform_real_distribution<> dis(-length / 2.0, length / 2.0);
     goal.pose.pose.position.x += dis(gen);
     goal.pose.pose.position.y += dis(gen);
   }
