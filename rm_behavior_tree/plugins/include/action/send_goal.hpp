@@ -25,6 +25,8 @@ public:
 
   bool setGoal(Goal & goal) override;
 
+  void halt() override;
+  
   void onHalt() override;
 
   BT::NodeStatus onResultReceived(const WrappedResult & wr) override;

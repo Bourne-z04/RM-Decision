@@ -15,7 +15,8 @@ bool SendGoalAction::setGoal(nav2_msgs::action::NavigateToPose::Goal & goal)
 {
   auto res = getInput<geometry_msgs::msg::PoseStamped>("goal_pose");
   if (!res) {
-    throw BT::RuntimeError("error reading port [goal_pose]:", res.error());
+    RCLCPP_ERROR(logger(), "error reading port [goal_pose]");
+    return false;
   }
   goal.pose = res.value();
   goal.pose.header.frame_id = "map";
@@ -45,6 +46,16 @@ bool SendGoalAction::setGoal(nav2_msgs::action::NavigateToPose::Goal & goal)
     << goal.pose.pose.orientation.w << " ]\n";
 
   return true;
+}
+
+void SendGoalAction::halt()
+{
+  try {
+    RosActionNode<nav2_msgs::action::NavigateToPose>::halt();
+  } catch (const std::exception & e) {
+    RCLCPP_DEBUG(logger(), "Safe halt: goal handle was already invalid or finished.");
+  }
+    resetStatus();
 }
 
 void SendGoalAction::onHalt()

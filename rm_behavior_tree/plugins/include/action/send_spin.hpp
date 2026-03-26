@@ -31,6 +31,8 @@ public:
 private:
   bool first_spin_tick_;                           // 首次开启spin标记
   std::chrono::steady_clock::time_point spin_start_time_; // spin开启时间戳
+  float current_base_velocity_;                   
+  std::chrono::steady_clock::time_point last_shift_time_;
 };
 
 }  // namespace rm_behavior_tree

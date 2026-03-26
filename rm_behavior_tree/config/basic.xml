@@ -64,10 +64,12 @@
               <Sequence>
                 <RateController hz="1">
                   <Fallback>
-                    <SendGoal name="Attack"
-                              goal_pose="6.0;-3.75;0;0;0;0;1"
+                    <Timeout msec="4000">
+                      <SendGoal name="Attack"
+                              goal_pose="8.0;-3.75;0;0;0;0;1"
                               action_name="/navigate_to_pose"
                               move="false"/>
+                    </Timeout>
                     
                     <RetryUntilSuccessful num_attempts="3">
                       <SendGoal name="Center_Backup"
