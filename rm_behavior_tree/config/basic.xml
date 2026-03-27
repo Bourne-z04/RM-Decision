@@ -11,29 +11,29 @@
       <GetCurrentLocation name="GetLocation"
                           current_location="{current_location}"/>
 
-      <RateController hz="1">
-        <IfThenElse>
-          <IsNearGoal name="CheckNearCenter"
-                      current_location="{current_location}"
-                      goal_pose="5.0;-3.0;0;0;0;0;1"
-                      distance_threshold="2.0"/>
-          <SendSpin name="SpinNear"
-                    is_spin="true"
-                    spin_velocity="5.0"
-                    topic_name="/cmd_vel_wz"/>
-          <SendSpin name="SpinFar"
-                    is_spin="true"
-                    spin_velocity="1.0"
-                    topic_name="/cmd_vel_wz"/>
-        </IfThenElse>
-      </RateController>
-
       <WhileDoElse>
         <IsGameTime name="IsGameStart"
                     message="{game_progress}"
                     game_progress="4"/>
 
         <ReactiveSequence>
+          <RateController hz="1">
+            <IfThenElse>
+              <IsNearGoal name="CheckNearCenter"
+                          current_location="{current_location}"
+                          goal_pose="5.0;-3.0;0;0;0;0;1"
+                          distance_threshold="2.0"/>
+              <SendSpin name="SpinNear"
+                        is_spin="true"
+                        spin_velocity="4.5"
+                        topic_name="/cmd_vel_wz"/>
+              <SendSpin name="SpinFar"
+                        is_spin="true"
+                        spin_velocity="1.0"
+                        topic_name="/cmd_vel_wz"/>
+            </IfThenElse>
+          </RateController>
+
           <WhileDoElse>
             <IsRetreat name="NeedRetreat"
                        message="{feedback_robot_hp}"
@@ -50,15 +50,38 @@
             <ReactiveFallback>
               <Sequence>
                 <IsHPdeduction name="CheckDeduction" message="{feedback_robot_hp}"/>
-                <RateController hz="1">
-                  <RetryUntilSuccessful num_attempts="3">
-                    <SendGoal name="Center"
-                              goal_pose="5.0;-3.0;0;0;0;0;1"
-                              action_name="/navigate_to_pose"
-                              move="true"
-                              length="1.0"/>
-                  </RetryUntilSuccessful>
-                </RateController>
+                <IfThenElse>
+                  <IsHPLevel name="HPbelow200"
+                             message="{feedback_robot_hp}"
+                             hp_threshold="200"/>
+                  <RateController hz="1">
+                    <Fallback>
+                      <Timeout msec="4000">
+                        <SendGoal name="Backline"
+                                  goal_pose="5.0;-5.0;0;0;0;0;1"
+                                  action_name="/navigate_to_pose"
+                                  move="false"/>
+                      </Timeout>
+
+                      <RetryUntilSuccessful num_attempts="3">
+                        <SendGoal name="Backline_Backup"
+                                  goal_pose="5.0;-5.0;0;0;0;0;1"
+                                  action_name="/navigate_to_pose"
+                                  move="true"
+                                  length="1.0"/>
+                      </RetryUntilSuccessful>
+                    </Fallback>
+                  </RateController>
+                  <RateController hz="1">
+                    <RetryUntilSuccessful num_attempts="3">
+                      <SendGoal name="Center"
+                                goal_pose="5.0;-3.0;0;0;0;0;1"
+                                action_name="/navigate_to_pose"
+                                move="true"
+                                length="1.0"/>
+                    </RetryUntilSuccessful>
+                  </RateController>
+                </IfThenElse>
               </Sequence>
 
               <Sequence>
@@ -105,6 +128,11 @@
 
     <Condition ID="IsHPdeduction" editable="true">
       <input_port name="message" default="{feedback_robot_hp}"/>
+    </Condition>
+
+    <Condition ID="IsHPLevel" editable="true">
+      <input_port name="message" default="{feedback_robot_hp}"/>
+      <input_port name="hp_threshold" default="200"/>
     </Condition>
 
     <Condition ID="IsGameTime" editable="true">

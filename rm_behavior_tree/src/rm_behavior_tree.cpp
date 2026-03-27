@@ -48,6 +48,7 @@ int main(int argc, char ** argv)
     "is_near_goal",
     "get_current_location",
     "is_HP_deduction",
+    "is_HP_level",
   };
   // clang-format on
 

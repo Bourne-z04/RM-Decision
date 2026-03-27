@@ -88,6 +88,11 @@ ament_auto_add_library(is_HP_deduction SHARED
 )
 add_target_dependencies(is_HP_deduction)
 
+ament_auto_add_library(is_HP_level SHARED
+    plugins/condition/is_HP_level.cpp
+)
+add_target_dependencies(is_HP_level)
+
 
 ament_auto_package(
   INSTALL_TO_SHARE
