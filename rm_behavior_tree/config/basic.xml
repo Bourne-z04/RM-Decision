@@ -66,7 +66,7 @@
                   <Fallback>
                     <Timeout msec="4000">
                       <SendGoal name="Attack"
-                              goal_pose="8.0;-3.75;0;0;0;0;1"
+                              goal_pose="6.0;-3.75;0;0;0;0;1"
                               action_name="/navigate_to_pose"
                               move="false"/>
                     </Timeout>
