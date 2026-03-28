@@ -28,6 +28,7 @@ RUN apt-get update && apt-get -y install \
     ros-humble-behaviortree-cpp-v3 \
     ros-humble-behaviortree-cpp \
     ros-humble-generate-parameter-library \
+    ros-humble-nav2-msgs \
     libboost-dev \
     nlohmann-json3-dev \
     libzmq3-dev \
