@@ -2,28 +2,26 @@
 #include "std_msgs/msg/float32.hpp"
 #include <cmath>
 #include <algorithm>
+#include <iomanip>
 
 namespace rm_behavior_tree
 {
 
 bool SendSpinAction::first_spin_tick_ = true;
 std::chrono::steady_clock::time_point SendSpinAction::spin_start_time_ = std::chrono::steady_clock::now();
-float SendSpinAction::current_base_velocity_ = 1.0f;
+float SendSpinAction::current_base_velocity_ = 0.0f;
 std::chrono::steady_clock::time_point SendSpinAction::last_shift_time_ = std::chrono::steady_clock::now();
-
 
 SendSpinAction::SendSpinAction(
   const std::string & name, const BT::NodeConfig & conf, const BT::RosNodeParams & params)
-: RosTopicPubNode(name, conf, params),
-  spin_amplitude_(0.5f),
-  spin_period_(5.0f)
+: RosTopicPubNode(name, conf, params)
 {
 }
 
 bool SendSpinAction::setMessage(std_msgs::msg::Float32 & msg)
 {
   bool is_spin = false;
-  float target_spin_velocity = 5.5f;   
+  float target_spin_velocity = 0.0f;
 
   getInput("is_spin", is_spin);
   getInput("spin_velocity", target_spin_velocity);
@@ -39,7 +37,7 @@ bool SendSpinAction::setMessage(std_msgs::msg::Float32 & msg)
       first_spin_tick_ = false;
     }
 
-    target_spin_velocity = std::max(1.0f, std::min(5.0f, target_spin_velocity));
+    target_spin_velocity = std::max(0.0f, std::min(5.0f, target_spin_velocity));
 
     float elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
         now - last_shift_time_).count();
@@ -49,8 +47,10 @@ bool SendSpinAction::setMessage(std_msgs::msg::Float32 & msg)
       last_shift_time_ = now;
     }
 
+    // 三角波调制
     float elapsed = std::chrono::duration<float>(now - spin_start_time_).count();
-    float phase = std::fmod(elapsed, spin_period_) / spin_period_;
+    float period = std::max(0.1f, spin_period_);  // 防止除零，最小周期 0.1s
+    float phase = std::fmod(elapsed, period) / period;
     float triangular_value;
     if (phase < 0.5f) {
       triangular_value = phase * 2.0f;
@@ -60,25 +60,23 @@ bool SendSpinAction::setMessage(std_msgs::msg::Float32 & msg)
     msg.data = (current_base_velocity_ - spin_amplitude_) + triangular_value * 2.0f * spin_amplitude_;
   } else {
     auto now = std::chrono::steady_clock::now();
-    auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+
+    // 平滑减速到 0，不加三角波
+    float elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
         now - last_shift_time_).count();
     if (elapsed_ms >= 50) {
       float alpha = 0.05f;
-      current_base_velocity_ += alpha * (1.0f - current_base_velocity_);  // 平滑减速到 1.0
+      current_base_velocity_ += alpha * (0.0f - current_base_velocity_);
       last_shift_time_ = now;
     }
-    float elapsed = std::chrono::duration<float>(now - spin_start_time_).count();
-    float phase = std::fmod(elapsed, spin_period_) / spin_period_;
-    float triangular_value;
-    if (phase < 0.5f) {
-      triangular_value = phase * 2.0f;
-    } else {
-      triangular_value = 2.0f - phase * 2.0f;
-    }
-    msg.data = (current_base_velocity_ - spin_amplitude_) + triangular_value * 2.0f * spin_amplitude_;
-    if (current_base_velocity_ < 1.01f) {  // 平滑归零
+
+    msg.data = current_base_velocity_;
+
+    if (current_base_velocity_ < 0.01f) {  // 速度接近0时先发0，然后停止发布
       msg.data = 0.0f;
+      current_base_velocity_ = 0.0f;
       first_spin_tick_ = true;
+      return true;  
     }
   }
 

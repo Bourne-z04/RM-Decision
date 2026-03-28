@@ -29,13 +29,13 @@ public:
   }
 
 private:
-  static bool first_spin_tick_; 
-  static std::chrono::steady_clock::time_point spin_start_time_; 
+  static bool first_spin_tick_;
+  static std::chrono::steady_clock::time_point spin_start_time_;
   static float current_base_velocity_;
   static std::chrono::steady_clock::time_point last_shift_time_;
-  
-  float spin_amplitude_;
-  float spin_period_;
+
+  float spin_amplitude_ = 0.5f;
+  float spin_period_ = 5.0f;
 };
 
 }  // namespace rm_behavior_tree
