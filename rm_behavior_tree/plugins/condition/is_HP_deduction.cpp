@@ -35,7 +35,7 @@ BT::NodeStatus IsHPdeductionCondition::checkHPdeduction()
 
   last_hp_ = current_hp;
 
-  if ((current_time - last_hit_time_).seconds() < 5.0) {
+  if ((current_time - last_hit_time_).seconds() < 10.0) {
     return BT::NodeStatus::SUCCESS;
   }
 

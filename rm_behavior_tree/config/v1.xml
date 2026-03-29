@@ -11,64 +11,67 @@
       <GetCurrentLocation name="GetLocation"
                           current_location="{current_location}"/>
 
-      <RateController hz="1">
-        <IfThenElse>
-          <IsNearGoal name="CheckNearCenter"
-                      current_location="{current_location}"
-                      goal_pose="5.0;-3.0;0;0;0;0;1"
-                      distance_threshold="2.0"/>
-          <SendSpin name="SpinNear"
-                    is_spin="true"
-                    spin_velocity="4.5"
-                    topic_name="/cmd_vel_wz"/>
-          <SendSpin name="SpinFar"
-                    is_spin="true"
-                    spin_velocity="0.0"
-                    topic_name="/cmd_vel_wz"/>
-        </IfThenElse>
-      </RateController>
-
       <WhileDoElse>
         <IsGameTime name="IsGameStart"
                     message="{game_progress}"
                     game_progress="4"/>
 
         <ReactiveSequence>
+          <RateController hz="10">
+            <IfThenElse>
+              <IsNearGoal name="CheckNearCenter"
+                          current_location="{current_location}"
+                          goal_pose="5.0;-3.0;0;0;0;0;1"
+                          distance_threshold="2.0"/>
+              <SendSpin name="SpinNear"
+                        is_spin="true"
+                        spin_velocity="4.5"
+                        spin_amplitude="0.5"
+                        spin_period="5.0"
+                        topic_name="/cmd_vel_wz"/>
+              <SendSpin name="SpinFar"
+                        is_spin="true"
+                        spin_velocity="0.0"
+                        spin_amplitude="0.0"
+                        spin_period="0.0"
+                        topic_name="/cmd_vel_wz"/>
+            </IfThenElse>
+          </RateController>
+
           <WhileDoElse>
             <IsRetreat name="NeedRetreat"
                        message="{feedback_robot_hp}"
                        hp_threshold_retreat="110"
                        hp_threshold_recover="400"/>
 
-            <RateController hz="1">
-              <SendGoal name="Supply"
-                        goal_pose="-0.25;0.0;0;0;0;0;1"
-                        action_name="/navigate_to_pose"
-                        move="false"/>
-            </RateController>
+            <SendGoal name="Supply"
+                      goal_pose="-0.25;0.0;0;0;0;0;1"
+                      action_name="/navigate_to_pose"
+                      move="false"/>
 
             <ReactiveFallback>
               <Sequence>
                 <IsHPdeduction name="CheckDeduction" message="{feedback_robot_hp}"/>
-                <RateController hz="1">
-                  <RetryUntilSuccessful num_attempts="3">
-                    <SendGoal name="Center"
-                              goal_pose="5.0;-3.0;0;0;0;0;1"
-                              action_name="/navigate_to_pose"
-                              move="true"
-                              length="1.0"/>
-                  </RetryUntilSuccessful>
-                </RateController>
+                <RetryUntilSuccessful num_attempts="3">
+                  <SendGoal name="Center"
+                            goal_pose="5.0;-3.0;0;0;0;0;1"
+                            action_name="/navigate_to_pose"
+                            move="true"
+                            length="1.0"/>
+                </RetryUntilSuccessful>
               </Sequence>
 
               <Sequence>
-                <RateController hz="1">
-                  <Fallback>
-                    <SendGoal name="Attack"
-                              goal_pose="6.0;-3.75;0;0;0;0;1"
-                              action_name="/navigate_to_pose"
-                              move="false"/>
-                    
+                <Fallback>
+                    <Timeout msec="5000">
+                      <RetryUntilSuccessful num_attempts="3">
+                        <SendGoal name="Attack"
+                                  goal_pose="6.0;-3.75;0;0;0;0;1"
+                                  action_name="/navigate_to_pose"
+                                  move="false"/>
+                      </RetryUntilSuccessful>
+                    </Timeout>
+    
                     <RetryUntilSuccessful num_attempts="3">
                       <SendGoal name="Center_Backup"
                                 goal_pose="5.0;-3.0;0;0;0;0;1"
@@ -77,7 +80,6 @@
                                 length="1.0"/>
                     </RetryUntilSuccessful>
                   </Fallback>
-                </RateController>
               </Sequence>
             </ReactiveFallback>
             
@@ -127,6 +129,8 @@
     <Action ID="SendSpin" editable="true">
       <input_port name="is_spin" default="true"/>
       <input_port name="spin_velocity" default="5.0"/>
+      <input_port name="spin_amplitude" default="0.5"/>
+      <input_port name="spin_period" default="5.0"/>
       <input_port name="topic_name" default="/cmd_vel_wz"/>
     </Action>
 
@@ -149,6 +153,9 @@
       <input_port name="num_attempts" default="3"/>
     </Decorator>
     <Decorator ID="Fallback" editable="true"/>
+    <Decorator ID="Timeout" editable="true">
+      <input_port name="msec" default="5000"/>
+    </Decorator>
     <Action ID="AlwaysSuccess" editable="true"/>
   </TreeNodesModel>
 </root>
