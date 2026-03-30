@@ -39,6 +39,14 @@ bool SendSpinAction::setMessage(std_msgs::msg::Float32 & msg)
 
     target_spin_velocity = std::max(0.0f, std::min(5.0f, target_spin_velocity));
 
+    // 目标转速低于阈值时，直接归零并停止调制
+    if (target_spin_velocity < 0.1f) {
+      msg.data = 0.0f;
+      current_base_velocity_ = 0.0f;
+      first_spin_tick_ = true;
+      return true;
+    }
+
     float elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(
         now - last_shift_time_).count();
     if (elapsed_ms >= 50) {  // 每 50ms 平滑一次
@@ -70,14 +78,14 @@ bool SendSpinAction::setMessage(std_msgs::msg::Float32 & msg)
       last_shift_time_ = now;
     }
 
-    msg.data = current_base_velocity_;
-
-    if (current_base_velocity_ < 0.01f) {  // 速度接近0时先发0，然后停止发布
+    if (current_base_velocity_ < 0.1f) {  // 速度接近0时直接发0，然后停止发布
       msg.data = 0.0f;
       current_base_velocity_ = 0.0f;
       first_spin_tick_ = true;
-      return true;  
+      return true;
     }
+
+    msg.data = current_base_velocity_;
   }
 
   return true;
