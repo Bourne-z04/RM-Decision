@@ -29,12 +29,7 @@
                         spin_amplitude="0.5"
                         spin_period="5.0"
                         topic_name="/cmd_vel_wz"/>
-              <SendSpin name="SpinFar"
-                        is_spin="true"
-                        spin_velocity="0.0"
-                        spin_amplitude="0.0"
-                        spin_period="0.0"
-                        topic_name="/cmd_vel_wz"/>
+              <AlwaysSuccess/>
             </IfThenElse>
           </RateController>
 
