@@ -70,10 +70,7 @@
             
           </WhileDoElse>
         </ReactiveSequence>
-
-        <RateController hz="1">
           <AlwaysSuccess/>
-        </RateController>
       </WhileDoElse>
     </ReactiveSequence>
   </BehaviorTree>
