@@ -60,8 +60,8 @@
                                   move="false"/>
                     </Timeout>
     
-                    <SendGoal name="Attack"
-                                goal_pose="6.0;-3.75;0;0;0;0;1"
+                    <SendGoal name="Center"
+                                goal_pose="5.0;-3.0;0;0;0;0;1"
                                 action_name="/navigate_to_pose"
                                 move="true"
                                 length="1.0"/>
