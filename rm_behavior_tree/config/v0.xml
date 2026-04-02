@@ -51,24 +51,6 @@
 
             <ReactiveFallback>
               <Sequence>
-                <IsHPdeduction name="CheckDeduction" message="{feedback_robot_hp}"/>
-                    <Fallback>
-                    <Timeout msec="5000">
-                        <SendGoal name="Attack"
-                                  goal_pose="6.0;-3.75;0;0;0;0;1"
-                                  action_name="/navigate_to_pose"
-                                  move="false"/>
-                    </Timeout>
-    
-                    <SendGoal name="Attack"
-                                goal_pose="6.0;-3.75;0;0;0;0;1"
-                                action_name="/navigate_to_pose"
-                                move="true"
-                                length="1.0"/>
-                    </Fallback>
-              </Sequence>
-
-              <Sequence>
                 <Fallback>
                     <Timeout msec="5000">
                         <SendGoal name="Center"

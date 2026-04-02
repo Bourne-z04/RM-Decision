@@ -25,7 +25,7 @@
                           distance_threshold="2.0"/>
               <SendSpin name="SpinNear"
                         is_spin="true"
-                        spin_velocity="4.0"
+                        spin_velocity="4.5"
                         spin_amplitude="0.5"
                         spin_period="5.0"
                         topic_name="/cmd_vel_wz"/>
@@ -52,27 +52,18 @@
             <ReactiveFallback>
               <Sequence>
                 <IsHPdeduction name="CheckDeduction" message="{feedback_robot_hp}"/>
-                    <Fallback>
-                    <Timeout msec="5000">
-                        <SendGoal name="Attack"
-                                  goal_pose="6.0;-3.75;0;0;0;0;1"
-                                  action_name="/navigate_to_pose"
-                                  move="false"/>
-                    </Timeout>
-    
-                    <SendGoal name="Attack"
-                                goal_pose="6.0;-3.75;0;0;0;0;1"
-                                action_name="/navigate_to_pose"
-                                move="true"
-                                length="1.0"/>
-                    </Fallback>
+                  <SendGoal name="Back"
+                            goal_pose="5.0;-4.0;0;0;0;0;1"
+                            action_name="/navigate_to_pose"
+                            move="true"
+                            length="1.0"/>
               </Sequence>
 
               <Sequence>
                 <Fallback>
                     <Timeout msec="5000">
-                        <SendGoal name="Center"
-                                  goal_pose="5.0;-3.0;0;0;0;0;1"
+                        <SendGoal name="Attack"
+                                  goal_pose="6.0;-3.75;0;0;0;0;1"
                                   action_name="/navigate_to_pose"
                                   move="false"/>
                     </Timeout>
