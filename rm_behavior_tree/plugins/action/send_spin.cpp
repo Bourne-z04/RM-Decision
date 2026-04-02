@@ -7,14 +7,10 @@
 namespace rm_behavior_tree
 {
 
-bool SendSpinAction::first_spin_tick_ = true;
-std::chrono::steady_clock::time_point SendSpinAction::spin_start_time_ = std::chrono::steady_clock::now();
-float SendSpinAction::current_base_velocity_ = 0.0f;
-std::chrono::steady_clock::time_point SendSpinAction::last_shift_time_ = std::chrono::steady_clock::now();
-
 SendSpinAction::SendSpinAction(
   const std::string & name, const BT::NodeConfig & conf, const BT::RosNodeParams & params)
-: RosTopicPubNode(name, conf, params)
+: RosTopicPubNode(name, conf, params),
+  first_spin_tick_(true)
 {
 }
 
